@@ -1,11 +1,15 @@
 from django.test import TestCase
 
-class TestHome(TestCase):
+class HomeTest(TestCase):
+    def setUp(self):
+        self.response = self.client.get("/")
+
+
     def test_get_200(self):
-        response = self.client.get("/")
-        self.assertEqual(200, response.status_code)
+        """GET / must return status code 200 """
+        self.assertEqual(200, self.response.status_code)
 
     
     def test_should_use_template_index_html(self):
-        response = self.client.get('/')
-        self.assertTemplateUsed(response, 'index.html')
+        """GET / must use template index.html """
+        self.assertTemplateUsed(self.response, 'index.html')
